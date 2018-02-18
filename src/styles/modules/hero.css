@@ -1,0 +1,44 @@
+.hero {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/bitcoin.png');
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    h1,
+    p {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 300;
+        margin-bottom: 1.5rem;
+        color: $textColor;
+        text-align: center;
+    }
+    .btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: 80%;
+        height: 3rem;
+        text-align: center;
+        button {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            background-color: $btnColor;
+            padding: 0.5rem 1rem;
+            border-bottom: solid 3px;
+            border-radius: 4px;
+            border-color: $btnBorderColor;
+            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+            a {
+                color: $btnTextColor;
+            }
+        }
+    }
+}

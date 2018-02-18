@@ -1,0 +1,9 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "rule-empty-line-before": null,
+    "indentation": null,
+    "no-missing-end-of-source-newline": null,
+    "comment-empty-line-before": null
+  }
+}
