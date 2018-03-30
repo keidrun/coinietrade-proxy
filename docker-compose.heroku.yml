@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  proxy:
+    image: ${PROD_HEROKU_REGISTRY}/${PROD_HEROKU_APP}/${PROD_HEROKU_PROCESS_TYPE}:$TAG
+    build: .
+    env_file:
+      - .env

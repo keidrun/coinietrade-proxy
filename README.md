@@ -1,6 +1,6 @@
-# coinietrade-welcome
+# coinietrade-proxy
 
-Keid's CoinieTrade project - Welcome page.
+Keid's CoinieTrade project - Reverse proxy.
 
 ## License
 
