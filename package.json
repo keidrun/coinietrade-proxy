@@ -8,15 +8,17 @@
     "npm-run-all": "^4.1.2"
   },
   "scripts": {
-    "d:stop": "docker container stop coinietrade-proxy",
-    "d:rm": "docker container rm coinietrade-proxy",
-    "d:build": "docker build -t coinietrade-proxy:0.0.1 . --no-cache",
-    "d:start":
-      "docker run -d --link=coinietradefront_web_1:coinietradefront_web --net coinietradefront_default --name coinietrade-proxy -p 8080:80 coinietrade-proxy:0.0.1",
-    "restart": "npm-run-all -s d:*",
-    "sh": "docker exec -it coinietrade-proxy sh",
-    "logs": "docker logs coinietrade-proxy",
-    "prod:build": "docker-compose -f docker-compose.heroku.yml build --no-cache proxy",
+    "erb":
+      "PORT=80 PROXY_PASS_URL=http://coinietradefront_web_1:5000 MAINT_FLAG=false erb config/nginx.conf.erb > config/nginx.conf",
+    "proxy:down": "docker-compose down",
+    "proxy:build": "docker-compose build --no-cache",
+    "proxy:up": "docker-compose up -d",
+    "rebuild": "npm-run-all -s proxy:*",
+    "ps": "docker-compose ps",
+    "logs": "docker-compose logs",
+    "sh": "docker-compose exec proxy sh",
+    "prod:build":
+      "docker-compose -f docker-compose.heroku.yml build --no-cache proxy",
     "prod:push":
       "docker push `node -pe \"require('dotenv').config().parsed.PROD_HEROKU_REGISTRY\"`/`node -pe \"require('dotenv').config().parsed.PROD_HEROKU_APP\"`/`node -pe \"require('dotenv').config().parsed.PROD_HEROKU_PROCESS_TYPE\"`:`node -pe \"require('dotenv').config().parsed.TAG\"`",
     "prod": "npm-run-all -s prod:*"

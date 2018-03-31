@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  proxy:
+    image: coinietrade-proxy:$TAG
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      - PORT=80
+      - PROXY_PASS_URL=http://coinietradefront_web_1:5000
+      - MAINT_FLAG=false
+    external_links:
+      - coinietradefront_web_1
+
+networks:
+  default:
+    external:
+      name: coinietradefront_default
