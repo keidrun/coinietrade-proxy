@@ -1,5 +1,5 @@
-daemon off;
-worker_processes 4;
+daemon off; # For Docker
+worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>; # For Heroku
 
 load_module modules/ngx_http_geoip_module.so; # GeoIP
 
@@ -36,6 +36,7 @@ http {
   client_header_buffer_size 1k;
   client_max_body_size 8m;
   large_client_header_buffers 2 1k;
+  client_body_timeout 5; # For Heroku
 
   # GeoIP
   geoip_country /etc/nginx/geoip/GeoIP.dat;
@@ -48,6 +49,15 @@ http {
                     '"$request_body"';
   access_log logs/access.log main;
   error_log logs/error.log warn;
+
+  upstream herokuapp {
+    server <%= ENV["HEROKU_APP_DOMAIN"] %>;
+  }
+
+  #server {
+  #  server_name ~^(www\.)(?<domain>.+)$;
+  #  return 301 $scheme://$domain$request_uri;
+  #}
 
   server{
     listen <%= ENV["PORT"] %>;
@@ -64,16 +74,24 @@ http {
     }
     <% else %>
     location ^~ / {
-      proxy_pass <%= ENV["PROXY_PASS_URL"] %>;
+      proxy_pass http://herokuapp;
 
-      proxy_redirect   off;
-      proxy_set_header Host               $host;
-      proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
-      proxy_set_header X-Forwarded-Host   $host;
-      proxy_set_header X-Forwarded-Server $host;
-      proxy_set_header X-Real-IP          $remote_addr;
-      proxy_set_header Connection         '';
       proxy_http_version 1.1;
+      proxy_redirect   off;
+      proxy_set_header Host               $http_host;
+      proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
+      proxy_set_header X-Real-IP          $remote_addr;
+      proxy_set_header X-Forwarded-Proto  http;
+      proxy_set_header X-Forwarded-Host   $http_host;
+      proxy_set_header X-Forwarded-Server $http_host;
+      proxy_set_header Connection         '';
+
+      ## For WebSocket
+      #proxy_set_header Upgrade $http_upgrade;
+      #proxy_set_header Connection "upgrade";
+
+      #proxy_set_header X-Forwarded-Proto https;
+      #proxy_redirect http:// https://;
     }
     <% end %>
 
@@ -90,4 +108,5 @@ http {
       root /sites/public;
     }
   }
+
 }

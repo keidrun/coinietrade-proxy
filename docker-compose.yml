@@ -7,8 +7,9 @@ services:
     ports:
       - "8080:80"
     environment:
+      - NGINX_WORKERS=1
       - PORT=80
-      - PROXY_PASS_URL=http://coinietradefront_web_1:5000
+      - HEROKU_APP_DOMAIN=coinietradefront_web_1:5000
       - MAINT_FLAG=false
     external_links:
       - coinietradefront_web_1

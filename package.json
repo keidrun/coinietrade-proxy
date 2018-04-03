@@ -8,12 +8,18 @@
     "npm-run-all": "^4.1.2"
   },
   "scripts": {
+    "env:reset": "cp -rf ../coinietrade-env/proxy/.env .",
+    "env:tree": "git -C ../coinietrade-env/proxy/ tree",
+    "env:status": "git -C ../coinietrade-env/proxy/ status",
+    "env:diff": "diff .env ../coinietrade-env/proxy/.env || :",
+    "env:commit":
+      "cp -rf .env ../coinietrade-env/proxy/ && git -C ../coinietrade-env/proxy/ commit -am 'Update env file.'",
     "erb":
-      "PORT=80 PROXY_PASS_URL=http://coinietradefront_web_1:5000 MAINT_FLAG=false erb config/nginx.conf.erb > config/nginx.conf",
+      "NGINX_WORKERS=1 PORT=8080 HEROKU_APP_DOMAIN=coinietradefront_web_1:5000 MAINT_FLAG=false erb config/nginx.conf.erb > config/nginx.conf",
     "proxy:down": "docker-compose down",
     "proxy:build": "docker-compose build --no-cache",
     "proxy:up": "docker-compose up -d",
-    "rebuild": "npm-run-all -s proxy:*",
+    "proxy": "npm-run-all -s proxy:*",
     "ps": "docker-compose ps",
     "logs": "docker-compose logs",
     "sh": "docker-compose exec proxy sh",
