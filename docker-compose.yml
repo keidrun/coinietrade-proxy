@@ -9,6 +9,7 @@ services:
     environment:
       - NGINX_WORKERS=1
       - PORT=80
+      - HEROKU_APP_HOST=localhost:8080
       - HEROKU_APP_DOMAIN=coinietradefront_web_1:5000
       - MAINT_FLAG=false
     external_links:
