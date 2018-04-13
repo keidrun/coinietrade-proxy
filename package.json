@@ -16,13 +16,15 @@
       "cp -rf .env ../coinietrade-env/proxy/ && git -C ../coinietrade-env/proxy/ commit -am 'Update env file.'",
     "erb":
       "NGINX_WORKERS=1 PORT=8080 HEROKU_APP_DOMAIN=coinietradefront_web_1:5000 HEROKU_APP_HOST=localhost:8080 MAINT_FLAG=false erb config/nginx.conf.erb > config/nginx.conf",
+    "erb_maint":
+      "NGINX_WORKERS=1 PORT=8080 HEROKU_APP_DOMAIN=coinietradefront_web_1:5000 HEROKU_APP_HOST=localhost:8080 MAINT_FLAG=true erb config/nginx.conf.erb > config/nginx.conf",
     "proxy:down": "docker-compose down",
     "proxy:build": "docker-compose build --no-cache",
     "proxy:up": "docker-compose up -d",
     "proxy": "npm-run-all -s proxy:*",
-    "ps": "docker-compose ps",
-    "logs": "docker-compose logs",
-    "sh": "docker-compose exec proxy sh",
+    "proxy_ps": "docker-compose ps",
+    "proxy_logs": "docker-compose logs",
+    "proxy_sh": "docker-compose exec proxy sh",
     "prod:build":
       "docker-compose -f docker-compose.heroku.yml build --no-cache proxy",
     "prod:push":
