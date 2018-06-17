@@ -10,12 +10,12 @@ services:
       - NGINX_WORKERS=1
       - PORT=80
       - HEROKU_APP_HOST=localhost:8080
-      - HEROKU_APP_DOMAIN=coinietradefront_web_1:5000
+      - HEROKU_APP_DOMAIN=web-ci:5000
       - MAINT_FLAG=false
     external_links:
-      - coinietradefront_web_1
+      - web-ci
 
 networks:
   default:
     external:
-      name: coinietradefront_default
+      name: coinietrade-front_default
