@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  proxy:
+    image: coinietrade-proxy:$TAG
+    container_name: proxy
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_WORKERS=1
+      - PORT=80
+      - HEROKU_APP_HOST=localhost:8080
+      - HEROKU_APP_DOMAIN=frontend-web:5000
+      - MAINT_FLAG=false
+    depends_on:
+      - 'web'
+
+  web:
+    image: keidrun/coinietrade-front:0.1.0
+    container_name: frontend-web
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=ci
+    depends_on:
+      - 'db'
+  db:
+    container_name: frontend-db
+    image: mongo:3.6.3

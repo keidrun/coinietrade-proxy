@@ -20,6 +20,6 @@ RUN apk update \
   && mv GeoIP.dat /etc/nginx/geoip/ \
   && mv GeoLiteCity.dat /etc/nginx/geoip/
 
-EXPOSE 8080:80
+EXPOSE 80
 
 CMD ["/start.sh"]

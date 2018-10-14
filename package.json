@@ -5,18 +5,13 @@
   "author": "Keid",
   "license": "No License",
   "devDependencies": {
+    "browser-sync": "^2.26.3",
     "npm-run-all": "^4.1.2"
   },
   "scripts": {
+    "dev": "browser-sync start --serveStatic 'public' --files 'public' --port 8080",
     "erb": "NGINX_WORKERS=1 PORT=8080 HEROKU_APP_DOMAIN=coinietradefront_web_1:5000 HEROKU_APP_HOST=localhost:8080 MAINT_FLAG=false erb config/nginx.conf.erb > config/nginx.conf",
     "erb_maint": "NGINX_WORKERS=1 PORT=8080 HEROKU_APP_DOMAIN=coinietradefront_web_1:5000 HEROKU_APP_HOST=localhost:8080 MAINT_FLAG=true erb config/nginx.conf.erb > config/nginx.conf",
-    "proxy:down": "docker-compose down",
-    "proxy:build": "docker-compose build --no-cache",
-    "proxy:up": "docker-compose up -d",
-    "proxy": "npm-run-all -s proxy:*",
-    "proxy_ps": "docker-compose ps",
-    "proxy_logs": "docker-compose logs",
-    "proxy_sh": "docker-compose exec proxy sh",
     "prod:build": "docker-compose -f docker-compose.heroku.yml build --no-cache proxy",
     "prod:push": "docker push `node -pe \"require('dotenv').config().parsed.PROD_HEROKU_REGISTRY\"`/`node -pe \"require('dotenv').config().parsed.PROD_HEROKU_APP\"`/`node -pe \"require('dotenv').config().parsed.PROD_HEROKU_PROCESS_TYPE\"`:`node -pe \"require('dotenv').config().parsed.TAG\"`",
     "prod:release": "bash ./heroku-container-release.sh `node -pe \"require('dotenv').config().parsed.PROD_HEROKU_APP\"` `node -pe \"require('dotenv').config().parsed.PROD_HEROKU_PROCESS_TYPE\"` `node -pe \"require('dotenv').config().parsed.TAG\"` `node -pe \"require('dotenv').config().parsed.HEROKU_API_TOKEN\"`",
