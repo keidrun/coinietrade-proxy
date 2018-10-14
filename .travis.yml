@@ -1,0 +1,14 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+  - heroku --version
+  - docker image build -t $PROD_HEROKU_REGISTRY/$PROD_HEROKU_APP/$PROD_HEROKU_PROCESS_TYPE:$TAG .
+
+script:
+  - heroku container:login # need HEROKU_API_KEY
+  - docker push $PROD_HEROKU_REGISTRY/$PROD_HEROKU_APP/$PROD_HEROKU_PROCESS_TYPE:$TAG
+  - bash ./heroku-container-release.sh $PROD_HEROKU_APP $PROD_HEROKU_PROCESS_TYPE $TAG $HEROKU_API_KEY
