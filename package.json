@@ -2,8 +2,8 @@
   "name": "coinietrade-proxy",
   "version": "0.1.0",
   "repository": "https://github.com/keidrun/coinietrade-proxy.git",
-  "author": "Keid",
-  "license": "No License",
+  "author": "keidrun",
+  "license": "GPL 3.0",
   "devDependencies": {
     "browser-sync": "^2.26.3",
     "npm-run-all": "^4.1.2"
