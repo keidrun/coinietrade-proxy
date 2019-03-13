@@ -1,4 +1,4 @@
-FROM openresty/openresty:1.13.6.1-1-alpine
+FROM openresty/openresty:1.13.6.2-alpine
 
 LABEL maintainer='Keid'
 
@@ -11,14 +11,7 @@ COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
 RUN apk update \
-  && apk add ruby wget \
-  && wget -q http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz \
-  && wget -q http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz \
-  && gunzip GeoIP.dat.gz \
-  && gunzip GeoLiteCity.dat.gz \
-  && mkdir -p /etc/nginx/geoip \
-  && mv GeoIP.dat /etc/nginx/geoip/ \
-  && mv GeoLiteCity.dat /etc/nginx/geoip/
+  && apk add --no-cache ruby
 
 EXPOSE 80
 
